@@ -27,7 +27,7 @@ const Navbar = () => {
             Maps
           </Link>
           <Link
-            href="/maps"
+            href="/session"
             className="font-medium text-muted-foreground hover:text-foreground transition-colors"
           >
             Session
