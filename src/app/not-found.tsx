@@ -1,14 +1,22 @@
+import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Check, X } from "lucide-react";
 
 const NotFound = () => {
   return (
-    <div className="flex flex-col justify-center items-center gap-4 h-[calc(100vh-70px)]">
-      <div>
-        <p className="text-center text-lg">
+    <div className="flex flex-col justify-center items-center h-[calc(100vh-80px)]">
+      <Image
+        src="/huh.png"
+        width={125}
+        height={0}
+        alt="huh emoji"
+        className="opacity-50 -z-1"
+      />
+      <div className="-mt-8">
+        <h1 className="text-center text-lg">
           The page you're looking for isn't available.
-        </p>
+        </h1>
 
         <p className="text-center text-muted-foreground mt-2">
           If you're trying to get a player's stats, go to
@@ -35,7 +43,7 @@ const NotFound = () => {
 
       <div className="flex gap-2">
         <Link href="/">
-          <Button className="cursor-pointer font-bold">Home</Button>
+          <Button className="cursor-pointer font-bold mt-3">Home</Button>
         </Link>
       </div>
     </div>

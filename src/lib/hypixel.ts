@@ -1,4 +1,4 @@
-const TTL = 5 * 60 * 1000; //5 min cache
+const TTL = 3 * 60 * 1000; //3 min cache
 const cache: Record<string, { expires: number; data: any }> = {};
 
 export async function getUUIDFromUsername(username: string): Promise<string> {

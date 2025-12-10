@@ -7,7 +7,7 @@ import { Kbd } from "./ui/kbd";
 
 const Navbar = () => {
   return (
-    <header className="flex justify-between items-center mx-auto max-w-6xl p-4">
+    <header className="sticky top-0 flex justify-between items-center mx-auto max-w-6xl bg-background shadow-lg shadow-background p-4">
       <div className="flex justify-between items-center gap-3 md:gap-5 transition-all">
         <Link className="flex justify-center items-center gap-2" href="/">
           <Image
@@ -17,7 +17,7 @@ const Navbar = () => {
             alt="bedwar logo"
             className="dark:invert"
           />
-          <h1 className="font-medium">bedwar.xyz</h1>
+          <h1 className="font-bold">bedwar.xyz</h1>
         </Link>
         <nav className="flex justify-center items-center gap-2 md:gap-4 transition-all">
           <Link
