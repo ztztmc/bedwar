@@ -7,13 +7,13 @@ export default function Home() {
   return (
     <main className="max-w-6xl mx-auto mt-10 p-4">
       <section about="hero">
-        <h1 className="text-8xl sm:text-[170px] md:text-[200px] lg:text-[280px] xl:text-[310px] leading-40 sm:leading-80 text-center font-bold bg-linear-to-b from-foreground/25 dark:from-foreground/12 to-background bg-clip-text text-transparent mb-1 transition-all select-none">
+        <h1 className="text-8xl sm:text-[170px] md:text-[200px] lg:text-[280px] xl:text-[310px] sm:leading-80 text-center font-bold bg-linear-to-b from-foreground/25 dark:from-foreground/12 to-background bg-clip-text text-transparent mb-1 transition-all select-none">
           bedwar
         </h1>
         <Button
           variant="outline"
           size="lg"
-          className="cursor-pointer backdrop-blur-lg items-center text-sm md:text-[16px] text-muted-foreground px-3 py-2 justify-between w-[332px] md:w-[360px] block mx-auto -mt-8 sm:-mt-38 border-none shadow-lg sm:shadow-[0px_0px_10px_10px_rgba(0,0,0,0.1)]"
+          className="cursor-pointer backdrop-blur-lg items-center text-sm md:text-[16px] text-muted-foreground px-3 py-2 justify-between w-[332px] md:w-[360px] block mx-auto sm:-mt-38 border-none shadow-lg sm:shadow-[0px_0px_10px_10px_rgba(0,0,0,0.1)]"
         >
           <div className="flex justify-center items-center gap-2">
             <Search strokeWidth={3} />
@@ -73,8 +73,10 @@ export default function Home() {
             <div className="bg-primary-foreground hover:bg-secondary rounded-[calc(1rem-1px)] w-full md:w-[280px] px-5 py-4 overflow-hidden transition-colors h-40 md:h-full">
               <div className="flex justify-between items-center text-muted-foreground font-bold text-sm p-1">
                 <div className="flex items-center gap-1">
-                <Sparkles className="w-4 h-4 fill-primary rotate-10" /> Also
-                check out</div><ExternalLink className="w-5 h-5" />
+                  <Sparkles className="w-4 h-4 fill-primary rotate-10" /> Also
+                  check out
+                </div>
+                <ExternalLink className="w-5 h-5" />
               </div>
               <h2 className="font-medium text-xl">Guesswars</h2>
               <p className="text-sm text-muted-foreground mt-1">

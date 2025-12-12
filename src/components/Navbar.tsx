@@ -7,7 +7,7 @@ import { Kbd } from "./ui/kbd";
 
 const Navbar = () => {
   return (
-    <header className="sticky top-0 flex justify-between items-center mx-auto max-w-6xl bg-background shadow-lg shadow-background p-4 select-none">
+    <header className="sticky top-0 z-50 flex justify-between items-center mx-auto max-w-6xl w-full bg-background shadow-lg shadow-background p-4 select-none">
       <div className="flex justify-between items-center gap-3 md:gap-5 transition-all">
         <Link className="flex justify-center items-center gap-2" href="/">
           <Image

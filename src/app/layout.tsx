@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -19,7 +20,8 @@ export const metadata: Metadata = {
   description:
     "Search Hypixel Bedwars stats, track gameplay sessions, view map pool and rotations, in a single website.",
   creator: "ztzt",
-  keywords: "hypixel, bedwars, stats, hypixel bedwars, bedwars stats viewer",
+  keywords:
+    "hypixel, bedwars, stats, hypixel bedwars, hypixel stats, bedwars stats viewer",
 };
 
 export default function RootLayout({
@@ -30,7 +32,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-screen`}
       >
         <ThemeProvider
           attribute="class"
@@ -39,7 +41,10 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <Navbar />
-          {children}
+          <div className="flex-1 w-full">
+            {children}
+          </div>
+          <Footer />
         </ThemeProvider>
       </body>
     </html>
