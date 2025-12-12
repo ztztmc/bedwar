@@ -8,12 +8,12 @@ const NotFound = () => {
     <div className="flex flex-col justify-center items-center h-[calc(100vh-80px)]">
       <Image
         src="/huh.png"
-        width={125}
+        width={140}
         height={0}
         alt="huh emoji"
         className="opacity-50 -z-1"
       />
-      <div className="-mt-8">
+      <div className="-mt-10">
         <h1 className="text-center text-lg">
           The page you're looking for isn't available.
         </h1>
