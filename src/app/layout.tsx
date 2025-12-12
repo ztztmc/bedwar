@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { SearchProvider } from "@/components/SearchProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -40,11 +41,13 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Navbar />
-          <div className="flex-1 w-full">
-            {children}
-          </div>
-          <Footer />
+          <SearchProvider>
+            <Navbar />
+            <div className="flex-1 w-full">
+              {children}
+            </div>
+            <Footer />
+          </SearchProvider>
         </ThemeProvider>
       </body>
     </html>

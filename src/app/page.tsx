@@ -1,7 +1,7 @@
-import { Button } from "@/components/ui/button";
-import { ExternalLink, Search, Sparkles } from "lucide-react";
+import { ExternalLink, Sparkles } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { HomeSearchButton } from "@/components/HomeSearchButton";
 
 export default function Home() {
   return (
@@ -10,16 +10,7 @@ export default function Home() {
         <h1 className="text-8xl sm:text-[170px] md:text-[200px] lg:text-[280px] xl:text-[310px] sm:leading-80 text-center font-bold bg-linear-to-b from-foreground/25 dark:from-foreground/12 to-background bg-clip-text text-transparent mb-1 transition-all select-none">
           bedwar
         </h1>
-        <Button
-          variant="outline"
-          size="lg"
-          className="cursor-pointer backdrop-blur-lg items-center text-sm md:text-[16px] text-muted-foreground px-3 py-2 justify-between w-[332px] md:w-[360px] block mx-auto sm:-mt-38 border-none shadow-lg sm:shadow-[0px_0px_10px_10px_rgba(0,0,0,0.1)]"
-        >
-          <div className="flex justify-center items-center gap-2">
-            <Search strokeWidth={3} />
-            Enter an IGN to view Hypixel Bedwars stats
-          </div>
-        </Button>
+        <HomeSearchButton />
       </section>
 
       <section about="features" className="mt-50 select-none">

@@ -1,11 +1,16 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { ModeToggle } from "./ModeToggle";
+import { useSearch } from "@/components/SearchProvider";
 import { Search } from "lucide-react";
 import { Button } from "./ui/button";
 import { Kbd } from "./ui/kbd";
 
 const Navbar = () => {
+  const { setOpen } = useSearch();
+
   return (
     <header className="sticky top-0 z-50 flex justify-between items-center mx-auto max-w-6xl w-full bg-background shadow-lg shadow-background p-4 select-none">
       <div className="flex justify-between items-center gap-3 md:gap-5 transition-all">
@@ -35,7 +40,12 @@ const Navbar = () => {
         </nav>
       </div>
       <div className="md:hidden flex items-center gap-2">
-        <Button variant="secondary" size="icon" className="cursor-pointer">
+        <Button
+          variant="secondary"
+          size="icon"
+          className="cursor-pointer"
+          onClick={() => setOpen(true)}
+        >
           <Search />
         </Button>
         <ModeToggle />
@@ -44,6 +54,7 @@ const Navbar = () => {
         <Button
           variant="secondary"
           className="cursor-pointer items-center text-sm text-muted-foreground px-3 py-2 justify-between w-45"
+          onClick={() => setOpen(true)}
         >
           <div className="flex items-center gap-2">
             <Search />
