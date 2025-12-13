@@ -21,12 +21,18 @@ const SearchDialogue = ({ open, setOpen }: SearchDialogueProps) => {
     }
   };
 
+  const handleValueChange = (input: string) => {
+    //only letters, numbers, and underscores
+    const sanitized = input.replace(/[^a-zA-Z0-9_]/g, "").slice(0, 16);;
+    setValue(sanitized);
+  };
+
   return (
     <CommandDialog open={open} onOpenChange={setOpen}>
       <CommandInput
         placeholder="Enter an IGN, then press Enter to view stats"
         value={value}
-        onValueChange={setValue}
+        onValueChange={handleValueChange}
         onKeyDown={handleKeyDown}
       />
     </CommandDialog>
