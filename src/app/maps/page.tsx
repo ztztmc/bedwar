@@ -9,7 +9,7 @@ export default async function MapRotationPage() {
 
   if (!data) {
     return (
-      <div className="flex flex-col justify-center items-center h-[calc(100vh-80px)]">
+      <div className="flex flex-col justify-center items-center h-[calc(100vh-225px)]">
         <Image
           src="/crying.png"
           width={125}
