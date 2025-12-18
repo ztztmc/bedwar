@@ -1,14 +1,20 @@
 import { PlayerLoginInfo } from "@/components/player/PlayerLoginInfo";
 import PlayerQuickbuy from "@/components/player/PlayerQuickbuy";
 import PlayerSkin from "@/components/player/PlayerSkin";
+import RecentGames from "@/components/player/RecentGames";
 import { Button } from "@/components/ui/button";
 import {
   getHypixelPlayer,
   getHypixelStatus,
   getHypixelGuildName,
+  getHypixelRecentGames,
 } from "@/lib/hypixel";
 import { mcToHtml } from "@/lib/mc-colors";
-import { getPolsuAvgPing, getPolsuBedwars, parseFormattedName } from "@/lib/polsu";
+import {
+  getPolsuAvgPing,
+  getPolsuBedwars,
+  parseFormattedName,
+} from "@/lib/polsu";
 import { ExternalLink } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -101,7 +107,7 @@ export default async function PlayerPage(props: {
 
   const guild = await getHypixelGuildName(ign);
 
-  const isStaff = player.rank ?? false;
+  const isStaff = player.rank == "STAFF";
 
   const bedwars = player.stats?.Bedwars ?? {};
   const achievements = player.achievements ?? {};
@@ -114,8 +120,9 @@ export default async function PlayerPage(props: {
   const uuid = player.uuid;
   const online = status.online;
 
+  const recent = await getHypixelRecentGames(ign);
   const polsu = await getPolsuBedwars(uuid);
-  const ping = await getPolsuAvgPing(uuid)
+  const ping = await getPolsuAvgPing(uuid);
   const formattedName = polsu?.formatted ?? player?.displayname;
   let { stars, rank, name } = parseFormattedName(formattedName);
 
@@ -206,7 +213,8 @@ export default async function PlayerPage(props: {
             {ping && (
               <div className="rounded-lg p-px bg-linear-to-br dark:from-foreground/18 via-secondary dark:to-foreground/18">
                 <p className="font-bold text-lg bg-primary-foreground rounded-[calc(1rem-1px)] px-2 py-0.5">
-                  {ping}<span className="text-muted-foreground">ms</span>
+                  {ping}
+                  <span className="text-muted-foreground">ms</span>
                 </p>
               </div>
             )}
@@ -284,8 +292,13 @@ export default async function PlayerPage(props: {
             />
           </div>
         </div>
-        <div className="mt-2">
-          <PlayerQuickbuy favourites={bedwars.favourites_2} />
+        <div>
+          <div>
+            <PlayerQuickbuy favourites={bedwars.favourites_2} />
+          </div>
+          <div className="mt-4">
+            <RecentGames recentGames={recent?.games} />
+          </div>
         </div>
       </div>
     </main>
@@ -312,7 +325,7 @@ function Stat({
   value4: number | string;
 }) {
   return (
-    <div className="rounded-lg p-px bg-linear-to-br dark:from-foreground/18 via-secondary dark:to-foreground/18 mt-2">
+    <div className="rounded-lg p-px bg-linear-to-br dark:from-foreground/18 via-secondary dark:to-foreground/18 mt-2 w-105.5">
       <div className="flex items-center w-105">
         <div className="bg-primary-foreground p-3 rounded-tl-[calc(1rem-1px)] rounded-bl-[calc(1rem-1px)] w-105">
           <p className="text-sm text-muted-foreground">{label1}</p>

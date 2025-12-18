@@ -129,3 +129,62 @@ export async function getHypixelGuildName(
 
   return guildName;
 }
+
+export type HypixelRecentGame = {
+  date: number;
+  ended?: number;
+  gameType?: string;
+  mode?: string;
+  map?: string;
+};
+
+export type HypixelRecentGamesResponse = {
+  success: boolean;
+  uuid: string;
+  games: HypixelRecentGame[];
+};
+
+export async function getHypixelRecentGames(
+  username: string
+): Promise<HypixelRecentGamesResponse | null> {
+  const cacheKey = `hypixel-recentgames-${username.toLowerCase()}`;
+
+  const cached = cache[cacheKey];
+  if (cached && Date.now() < cached.expires) {
+    return cached.data;
+  }
+
+  const uuid = await getUUIDFromUsername(username);
+
+  const res = await fetch(
+    `https://api.hypixel.net/recentgames?key=${process.env.HYPIXEL_API_KEY}&uuid=${uuid}`
+  );
+
+  if (!res.ok) {
+    return null;
+  }
+
+  const data = (await res.json()) as HypixelRecentGamesResponse;
+
+  cache[cacheKey] = {
+    expires: Date.now() + TTL,
+    data,
+  };
+
+  return data;
+}
+
+export function formatBedwarsMode(mode?: string): string {
+  switch (mode) {
+    case "BEDWARS_EIGHT_ONE":
+      return "Solo";
+    case "BEDWARS_EIGHT_TWO":
+      return "Doubles";
+    case "BEDWARS_FOUR_THREE":
+      return "3v3v3v3";
+    case "BEDWARS_FOUR_FOUR":
+      return "4v4v4v4";
+    default:
+      return "Unknown";
+  }
+}
