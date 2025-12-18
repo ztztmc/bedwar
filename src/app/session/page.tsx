@@ -2,7 +2,7 @@ import Image from "next/image";
 
 const SessionPage = () => {
   return (
-    <div className="flex flex-col justify-center items-center h-[calc(100vh-215px)]">
+    <div className="flex flex-col justify-center items-center h-[calc(100vh-230px)]">
       <Image
         src="/construction.png"
         width={120}

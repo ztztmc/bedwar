@@ -1,4 +1,5 @@
 import { PlayerLoginInfo } from "@/components/player/PlayerLoginInfo";
+import PlayerQuickbuy from "@/components/player/PlayerQuickbuy";
 import PlayerSkin from "@/components/player/PlayerSkin";
 import { Button } from "@/components/ui/button";
 import {
@@ -7,18 +8,31 @@ import {
   getHypixelGuildName,
 } from "@/lib/hypixel";
 import { mcToHtml } from "@/lib/mc-colors";
-import { getPolsuBedwars, parseFormattedName } from "@/lib/polsu";
+import { getPolsuAvgPing, getPolsuBedwars, parseFormattedName } from "@/lib/polsu";
 import { ExternalLink } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
 const safeDiv = (a: number, b: number) => (b > 0 ? a / b : 0);
+
 const safeDivString = (a: number, b: number): string => {
   if (b > 0) {
     return (a / b).toFixed(2);
   }
   return "0.00";
 };
+
+function normalizeUrl(url: string) {
+  if (!url) return "#";
+
+  const trimmed = url.trim();
+
+  if (/^https?:\/\//i.test(trimmed)) {
+    return trimmed;
+  }
+
+  return `https://${trimmed}`;
+}
 
 export default async function PlayerPage(props: {
   params: Promise<{ ign: string }>;
@@ -27,12 +41,12 @@ export default async function PlayerPage(props: {
 
   const hypixelData = await getHypixelPlayer(ign);
   const statusData = await getHypixelStatus(ign);
-  const player = hypixelData.player;
-  const status = statusData.session;
+  const player = hypixelData?.player;
+  const status = statusData?.session;
 
-  if (hypixelData.success && !player) {
+  if (hypixelData?.success && !player) {
     return (
-      <div className="flex flex-col justify-center items-center h-[calc(100vh-225px)]">
+      <div className="flex flex-col justify-center items-center h-[calc(100vh-230px)]">
         <Image
           src="/crying.png"
           width={125}
@@ -60,7 +74,7 @@ export default async function PlayerPage(props: {
 
   if (!player || !status) {
     return (
-      <div className="flex flex-col justify-center items-center h-[calc(100vh-225px)]">
+      <div className="flex flex-col justify-center items-center h-[calc(100vh-230px)]">
         <Image
           src="/crying.png"
           width={125}
@@ -101,6 +115,7 @@ export default async function PlayerPage(props: {
   const online = status.online;
 
   const polsu = await getPolsuBedwars(uuid);
+  const ping = await getPolsuAvgPing(uuid)
   const formattedName = polsu?.formatted ?? player?.displayname;
   let { stars, rank, name } = parseFormattedName(formattedName);
 
@@ -110,7 +125,7 @@ export default async function PlayerPage(props: {
 
   return (
     <main className="max-w-6xl mx-auto mt-2 p-4">
-      <div className="flex gap-6 justify-center items-start">
+      <div className="flex lg:flex-row flex-col gap-6 justify-center items-start">
         <div className="flex flex-col">
           {/* Skin Image */}
           <PlayerSkin uuid={uuid} ign={ign} />
@@ -152,7 +167,7 @@ export default async function PlayerPage(props: {
               )}
               {player.socialMedia.links.YOUTUBE && (
                 <a
-                  href={player.socialMedia.links.YOUTUBE}
+                  href={normalizeUrl(player.socialMedia.links.YOUTUBE)}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="cursor-pointer flex justify-between items-center gap-2 hover:text-primary/88 transition-colors"
@@ -188,6 +203,13 @@ export default async function PlayerPage(props: {
                 dangerouslySetInnerHTML={{ __html: mcToHtml(stars) }}
               />
             </div>
+            {ping && (
+              <div className="rounded-lg p-px bg-linear-to-br dark:from-foreground/18 via-secondary dark:to-foreground/18">
+                <p className="font-bold text-lg bg-primary-foreground rounded-[calc(1rem-1px)] px-2 py-0.5">
+                  {ping}<span className="text-muted-foreground">ms</span>
+                </p>
+              </div>
+            )}
             {guild && (
               <div className="rounded-lg p-px bg-linear-to-br dark:from-foreground/18 via-secondary dark:to-foreground/18">
                 <p className="font-bold text-lg text-green-600 bg-primary-foreground rounded-[calc(1rem-1px)] px-2 py-0.5">
@@ -261,6 +283,9 @@ export default async function PlayerPage(props: {
               )}
             />
           </div>
+        </div>
+        <div className="mt-2">
+          <PlayerQuickbuy favourites={bedwars.favourites_2} />
         </div>
       </div>
     </main>

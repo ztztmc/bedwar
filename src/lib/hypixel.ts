@@ -9,7 +9,7 @@ export async function getUUIDFromUsername(username: string): Promise<string> {
 
   const data = await res.json();
   if (!data.id) {
-    throw new Error("UUID not found for this username.");
+    console.log("UUID not found for this username.");
   }
 
   return data.id;
@@ -31,7 +31,7 @@ export async function getHypixelPlayer(username: string) {
   );
 
   if (!res.ok) {
-    throw new Error("Failed to fetch Hypixel data.");
+    return null;
   }
 
   const data = await res.json();
@@ -58,7 +58,7 @@ export type HypixelStatusResponse = {
 
 export async function getHypixelStatus(
   username: string
-): Promise<HypixelStatusResponse> {
+): Promise<HypixelStatusResponse | null> {
   const cacheKey = `hypixel-status-${username.toLowerCase()}`;
 
   const cached = cache[cacheKey];
@@ -73,7 +73,7 @@ export async function getHypixelStatus(
   );
 
   if (!res.ok) {
-    throw new Error("Failed to fetch Hypixel status data.");
+    return null;
   }
 
   const data = (await res.json()) as HypixelStatusResponse;

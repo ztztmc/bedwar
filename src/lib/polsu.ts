@@ -1,8 +1,6 @@
-const POLSU_ENDPOINT = "https://api.polsu.xyz/polsu/bedwars/formatted";
-
 export async function getPolsuBedwars(uuid: string) {
   try {
-    const res = await fetch(`${POLSU_ENDPOINT}?uuid=${uuid}`, {
+    const res = await fetch(`https://api.polsu.xyz/polsu/bedwars/formatted?uuid=${uuid}`, {
       method: "GET",
       headers: {
         "API-Key": process.env.POLSU_API_KEY!,
@@ -11,7 +9,7 @@ export async function getPolsuBedwars(uuid: string) {
     });
 
     if (!res.ok) {
-      console.log("Polsu HTTP error:", res.status);
+      console.log("Polsu Bedwars HTTP error:", res.status);
       return null;
     }
 
@@ -24,6 +22,37 @@ export async function getPolsuBedwars(uuid: string) {
     return json.data;
   } catch (err) {
     console.error("Polsu fetch failed:", err);
+    return null;
+  }
+}
+
+export async function getPolsuAvgPing(uuid: string): Promise<number | null> {
+  try {
+    const res = await fetch(
+      `https://api.polsu.xyz/polsu/ping?uuid=${uuid}`,
+      {
+        method: "GET",
+        headers: {
+          "API-Key": process.env.POLSU_API_KEY!,
+        },
+        next: { revalidate: 180 }, //3 min cache
+      }
+    );
+
+    if (!res.ok) {
+      console.log("Polsu Ping HTTP error:", res.status);
+      return null;
+    }
+
+    const json = await res.json();
+
+    if (!json.success || !json.data?.stats?.avg) {
+      return null;
+    }
+
+    return Math.floor(json.data.stats.avg);
+  } catch (err) {
+    console.error("Polsu ping fetch failed:", err);
     return null;
   }
 }

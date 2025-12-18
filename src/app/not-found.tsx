@@ -5,7 +5,7 @@ import { Check, X } from "lucide-react";
 
 const NotFound = () => {
   return (
-    <div className="flex flex-col justify-center items-center h-[calc(100vh-225px)]">
+    <div className="flex flex-col justify-center items-center h-[calc(100vh-230px)]">
       <Image
         src="/huh.png"
         width={140}
