@@ -16,16 +16,17 @@ import {
   parseFormattedName,
 } from "@/lib/polsu";
 import { ExternalLink } from "lucide-react";
+import { PlayerPinButton } from "@/components/player/PlayerPinButton";
 import Image from "next/image";
 import Link from "next/link";
 
 const safeDiv = (a: number, b: number) => (b > 0 ? a / b : 0);
 
-const safeDivString = (a: number, b: number): string => {
+const safeDivPercent = (a: number, b: number): string => {
   if (b > 0) {
-    return (a / b).toFixed(2);
+    return `${((a / b) * 100).toFixed(2)} %`;
   }
-  return "0.00";
+  return "0.00 %";
 };
 
 function normalizeUrl(url: string) {
@@ -115,7 +116,7 @@ export default async function PlayerPage(props: {
   const gamesPlayed = bedwars.games_played_bedwars ?? 0;
   const wins = achievements.bedwars_wins ?? 0;
 
-  const winRate = safeDivString(wins, gamesPlayed) + " %";
+  const winRate = safeDivPercent(wins, gamesPlayed);
 
   const uuid = player.uuid;
   const online = status.online;
@@ -293,7 +294,10 @@ export default async function PlayerPage(props: {
           </div>
         </div>
         <div>
-          <div>
+          <div className="flex justify-end">
+            <PlayerPinButton ign={ign} />
+          </div>
+          <div className="mt-2">
             <PlayerQuickbuy favourites={bedwars.favourites_2} />
           </div>
           <div className="mt-4">

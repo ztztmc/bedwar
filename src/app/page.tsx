@@ -2,6 +2,7 @@ import { ExternalLink, Sparkles } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { HomeSearchButton } from "@/components/HomeSearchButton";
+import { PinnedPlayers } from "@/components/PinnedPlayers";
 
 export default function Home() {
   return (
@@ -11,6 +12,7 @@ export default function Home() {
           bedwar
         </h1>
         <HomeSearchButton />
+        <PinnedPlayers />
       </section>
 
       <section about="features" className="mt-50 select-none">
