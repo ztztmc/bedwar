@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button";
 import {
   getHypixelPlayer,
   getHypixelStatus,
-  getHypixelGuildName,
   getHypixelRecentGames,
 } from "@/lib/hypixel";
 import { mcToHtml } from "@/lib/mc-colors";
@@ -105,8 +104,6 @@ export default async function PlayerPage(props: {
       </div>
     );
   }
-
-  const guild = await getHypixelGuildName(ign);
 
   const isStaff = player.rank == "STAFF";
 
@@ -216,13 +213,6 @@ export default async function PlayerPage(props: {
                 <p className="font-bold text-lg bg-primary-foreground rounded-[calc(1rem-1px)] px-2 py-0.5">
                   {ping}
                   <span className="text-muted-foreground">ms</span>
-                </p>
-              </div>
-            )}
-            {guild && (
-              <div className="rounded-lg p-px bg-linear-to-br dark:from-foreground/18 via-secondary dark:to-foreground/18">
-                <p className="font-bold text-lg text-green-600 bg-primary-foreground rounded-[calc(1rem-1px)] px-2 py-0.5">
-                  {guild}
                 </p>
               </div>
             )}

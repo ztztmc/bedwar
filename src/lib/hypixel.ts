@@ -86,50 +86,6 @@ export async function getHypixelStatus(
   return data;
 }
 
-export type HypixelGuildNameResponse = string | null;
-
-export async function getHypixelGuildName(
-  username: string
-): Promise<HypixelGuildNameResponse> {
-  const cacheKey = `hypixel-guild-${username.toLowerCase()}`;
-
-  //check in cache
-  const cached = cache[cacheKey];
-  if (cached && Date.now() < cached.expires) {
-    return cached.data;
-  }
-
-  const uuid = await getUUIDFromUsername(username);
-
-  const res = await fetch(
-    `https://api.hypixel.net/guild?key=${process.env.HYPIXEL_API_KEY}&player=${uuid}`
-  );
-
-  if (!res.ok) {
-    throw new Error("Failed to fetch Hypixel guild data.");
-  }
-
-  const data = await res.json();
-
-  //player has no guild
-  if (!data.success || !data.guild) {
-    cache[cacheKey] = {
-      expires: Date.now() + TTL,
-      data: null,
-    };
-    return null;
-  }
-
-  const guildName = data.guild.name ?? null;
-
-  cache[cacheKey] = {
-    expires: Date.now() + TTL,
-    data: guildName,
-  };
-
-  return guildName;
-}
-
 export type HypixelRecentGame = {
   date: number;
   ended?: number;
