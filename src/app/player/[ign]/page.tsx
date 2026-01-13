@@ -8,12 +8,7 @@ import {
   getHypixelStatus,
   getHypixelRecentGames,
 } from "@/lib/hypixel";
-import { mcToHtml } from "@/lib/mc-colors";
-import {
-  getPolsuAvgPing,
-  getPolsuBedwars,
-  parseFormattedName,
-} from "@/lib/polsu";
+import { mcToHtml, formatLevel } from "@/lib/mc-colors";
 import { ExternalLink } from "lucide-react";
 import { PlayerPinButton } from "@/components/player/PlayerPinButton";
 import Image from "next/image";
@@ -105,8 +100,6 @@ export default async function PlayerPage(props: {
     );
   }
 
-  const isStaff = player.rank == "STAFF";
-
   const bedwars = player.stats?.Bedwars ?? {};
   const achievements = player.achievements ?? {};
 
@@ -119,13 +112,14 @@ export default async function PlayerPage(props: {
   const online = status.online;
 
   const recent = await getHypixelRecentGames(ign);
-  const polsu = await getPolsuBedwars(uuid);
-  const ping = await getPolsuAvgPing(uuid);
-  const formattedName = polsu?.formatted ?? player?.displayname;
-  let { stars, rank, name } = parseFormattedName(formattedName);
 
-  if (isStaff) {
-    rank = "§cStaff";
+  const name = player.displayname;
+  const bedwarsLevel = player.achievements?.bedwars_level ?? 0;
+  let stars = formatLevel(bedwarsLevel) || "";
+  if (stars.startsWith("§")) {
+    stars = stars.slice(3, -3);
+  } else if (stars.startsWith("[")) {
+    stars = stars.slice(1, -1);
   }
 
   return (
@@ -199,23 +193,9 @@ export default async function PlayerPage(props: {
             <div className="rounded-lg p-px bg-linear-to-br dark:from-foreground/18 via-secondary dark:to-foreground/18">
               <p
                 className="font-bold text-lg bg-primary-foreground rounded-[calc(1rem-1px)] px-2 py-0.5"
-                dangerouslySetInnerHTML={{ __html: mcToHtml(rank) }}
-              />
-            </div>
-            <div className="rounded-lg p-px bg-linear-to-br dark:from-foreground/18 via-secondary dark:to-foreground/18">
-              <p
-                className="font-bold text-lg bg-primary-foreground rounded-[calc(1rem-1px)] px-2 py-0.5"
                 dangerouslySetInnerHTML={{ __html: mcToHtml(stars) }}
               />
             </div>
-            {ping && (
-              <div className="rounded-lg p-px bg-linear-to-br dark:from-foreground/18 via-secondary dark:to-foreground/18">
-                <p className="font-bold text-lg bg-primary-foreground rounded-[calc(1rem-1px)] px-2 py-0.5">
-                  {ping}
-                  <span className="text-muted-foreground">ms</span>
-                </p>
-              </div>
-            )}
           </div>
           <h1
             className="text-4xl font-bold mt-2"

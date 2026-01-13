@@ -3,7 +3,7 @@ import {
   TooltipTrigger,
   TooltipContent,
 } from "@/components/ui/tooltip";
-import { CircleQuestionMark } from "lucide-react";
+import { CircleAlertIcon, CircleQuestionMark } from "lucide-react";
 import { formatRelativeTime, formatDate } from "@/lib/date-time-formatter";
 
 type Player = {
@@ -37,13 +37,14 @@ export function PlayerLoginInfo({ player, online }: PlayerLoginInfoProps) {
   return (
     <Tooltip>
       <TooltipTrigger asChild>
-        <p className="cursor-help select-none flex items-center gap-2 mt-2 text-muted-foreground">
+        <p className="cursor-help select-none flex w-fit items-center gap-2 mt-2 text-muted-foreground">
           {online ? (
             <span>Online</span>
           ) : (
-            <>Last online {formatRelativeTime(player.lastLogin)}</>
+            <span className="underline underline-offset-2">
+              Last online {formatRelativeTime(player.lastLogin)}
+            </span>
           )}
-          <CircleQuestionMark className="w-4.5" />
         </p>
       </TooltipTrigger>
 

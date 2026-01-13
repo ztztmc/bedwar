@@ -22,8 +22,19 @@ const Footer = () => {
             rotations.
           </p>
         </Link>
-        <div className="text-muted-foreground text-sm mt-5 sm:mt-0 -mb-1">
+        <div className="flex flex-col justify-end items-end text-muted-foreground text-sm mt-5 sm:mt-0 -mb-1">
           <div>&nbsp;</div>
+          <div className="flex items-center gap-1">
+            Powered by the
+            <a
+              href="https://api.hypixel.net"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-primary underline"
+            >
+              Hypixel API
+            </a>
+          </div>
           <div className="flex items-center gap-1">
             Made with
             <Heart stroke="0" className="fill-secondary-foreground w-5" />
@@ -37,26 +48,6 @@ const Footer = () => {
               ztzt
             </a>{" "}
             | ztztalt@gmail.com
-          </div>
-          <div className="flex items-center gap-1">
-            Powered by the
-            <a
-              href="https://api.hypixel.net"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-primary underline"
-            >
-              Hypixel API
-            </a>{" "}
-            and{" "}
-            <a
-              href="https://api.polsu.xyz/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-primary underline"
-            >
-              Polsu API
-            </a>
           </div>
         </div>
       </div>
